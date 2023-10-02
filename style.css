@@ -1,0 +1,32 @@
+.form-check {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+#task-list .task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task label.checked {
+  text-decoration: line-through;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filters {
+  display: flex;
+  column-gap: 1rem;
+}
+.filters span.active {
+  color: rgb(6, 101, 226);
+}
+.filters span {
+  cursor: pointer;
+  color: rgb(68, 68, 68);
+}
