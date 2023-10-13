@@ -1,9 +1,8 @@
-let gorevListesi = [
-  { id: 1, gorevAdi: "Görev 1", durum: "pending" },
-  { id: 2, gorevAdi: "Görev 2", durum: "pending" },
-  { id: 3, gorevAdi: "Görev 3", durum: "pending" },
-  { id: 4, gorevAdi: "Görev 4", durum: "pending" },
-];
+let gorevListesi = [];
+
+if(localStorage.getItem("gorevListesi") !== null){
+  gorevListesi = JSON.parse(localStorage.getItem("gorevListesi"))
+}
 
 let editId;
 let isEditTask = false;
@@ -28,7 +27,7 @@ function displayTasks(filter) {
       <li class="task list-group-item">
           <div class="form-check">
               <input type="checkbox" onclick="updateStatus(this)" id="${gorev.id}" class="form-check-input" ${completed}/>
-              <label class="p-2 form-check-label ${completed}" sfor="${gorev.id}">${gorev.gorevAdi}</label>
+              <label class="p-2 form-check-label ${completed}" for="${gorev.id}">${gorev.gorevAdi}</label>
           </div>
           <div class="dropdown">
           <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,8 +71,8 @@ function newTask(event) {
     if (!isEditTask) {
       //ekleme
       gorevListesi.push({
-        id: gorevListesi.length + 1,
-        gorevAdi: taskInput.value,
+        "id": gorevListesi.length + 1,
+        "gorevAdi": taskInput.value, "durum": "pending"
       });
     } else {
       //güncelleme
@@ -86,6 +85,7 @@ function newTask(event) {
     }
     taskInput.value = "";
     displayTasks(document.querySelector("span.active").id);
+    localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi))
   }
 
   event.preventDefault();
@@ -100,6 +100,7 @@ function deleteTask(id) {
   }
   gorevListesi.splice(deleteId, 1);
   displayTasks(document.querySelector("span.active").id);
+  localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi))
 }
 
 function editTask(taskId, taskName) {
@@ -114,6 +115,7 @@ let taskAll = document.getElementById("task-list").querySelectorAll(".task");
 
 btnClear.addEventListener("click", function () {
   gorevListesi.splice(0, gorevListesi.length);
+  localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi))
   displayTasks("");
 });
 
@@ -134,6 +136,7 @@ function updateStatus(selectedTask) {
       gorev.durum = durum;
     }
   }
+  localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi))
   displayTasks(document.querySelector("span.active").id);
 }
 
